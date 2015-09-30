@@ -1,4 +1,3 @@
-console.log("checking in");
 
 var hiliteStyle = {
  color: "black",
@@ -6,6 +5,9 @@ var hiliteStyle = {
 };
 
 var selection = document.getSelection();
+
+chrome.runtime.sendMessage({text: selection.toString()});
+
 // Note that Chrome doesn't allow non-contiguous selections anyway, so
 // .rangeCount is always 1:
 
@@ -30,6 +32,7 @@ else {
 function splitContainer(container, startOffset, endOffset) {
  if (container.nodeType == Node.TEXT_NODE) {
   var text = container.textContent;
+  if (!text.match(/\S/)) return;
   var left = startOffset ? text.slice(0, startOffset) : null;
   var mid = text.slice(startOffset || 0, endOffset || text.length);
   var right = endOffset ? text.slice(endOffset) : null;
@@ -43,8 +46,8 @@ function splitContainer(container, startOffset, endOffset) {
    rightNode.textContent = right;
    container.parentNode.insertBefore(rightNode, container.nextSibling);
   }
-  if (mid.length) {
-   container.textContent = mid;
+  container.textContent = mid;
+  if (mid.match(/\S/)) {
    hiliteNode(container);
   }
  }
@@ -77,9 +80,10 @@ leafNodes(ancestorContainer, range);
 selection.removeAllRanges();
 
 function hiliteNode(node) {
- console.log("about to hilite: "+node.textContent);
+ var text = node.textContent;
+ if (!text.match(/\S/)) return;
  var newSpan = document.createElement("span");
- newSpan.textContent = node.textContent;
+ newSpan.textContent = text;
  newSpan.className = "prostetnic";
  // newSpan.attr("style", "color:black;background-color:yellow");
  node.parentNode.replaceChild(newSpan, node);

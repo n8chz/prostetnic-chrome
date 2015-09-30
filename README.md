@@ -1,12 +1,12 @@
 # prostetnic-chrome
 Porting [Prostetnic Highlighter](https://github.com/n8chz/prostetnic) to Chromium.
 
-So far, just the actual highlighting is in place.
+So far, Highlights the text on the page, and stores url and highlight text as key/value pair in local storage.
 
 TODO:
 
-Next, persistence of highlights.
+Next, make it re-highlight text when we re-visit a url.
 
-Next, searchable highlight history.
+Then, searchable highlight history.
 
-Next, multi-color highlighting.
+Then, multi-color highlighting.

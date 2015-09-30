@@ -4,7 +4,9 @@
   "description" : "A watered-down port of Prostetnic Highlighter",
   "permissions": [
     "contextMenus",
-    "activeTab"
+    "activeTab",
+    "storage",
+    "unlimitedStorage"
   ],
   "background": {
     "scripts": ["menu.js"]
