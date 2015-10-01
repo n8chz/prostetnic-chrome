@@ -1,16 +1,22 @@
 {
-  "name" : "Persistent Highlighter",
-  "version" : "0.0.0",
-  "description" : "A watered-down port of Prostetnic Highlighter",
-  "permissions": [
-    "contextMenus",
-    "activeTab",
-    "storage",
-    "unlimitedStorage"
-  ],
-  "background": {
-    "scripts": ["menu.js"]
-  },
+ "name" : "Persistent Highlighter",
+ "version" : "0.0.0",
+ "description" : "A watered-down port of Prostetnic Highlighter",
+ "permissions": [
+  "contextMenus",
+  "activeTab",
+  "storage",
+  "unlimitedStorage"
+ ],
+ "background": {
+   "scripts": ["menu.js"]
+ },
+ "content_scripts": [
+  {
+   "matches": ["<all_urls>"],
+   "js": ["lib.js", "rehilite.js"]
+  }
+ ],
  "manifest_version": 2
 }
 
