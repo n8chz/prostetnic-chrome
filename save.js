@@ -28,4 +28,27 @@ chrome.storage.local.get(partialURL, function (items) {
   chrome.storage.local.set(items);
 });
 
+// downcase, dumb down smart apostrophes, split into words:
 
+var words = selectionText.toLowerCase().replace(/\u2019/, "'").split(/[^a-z']+/);
+
+// Incorporate words into word index:
+
+words.forEach(function (word) {
+  // Liberate word from single quotes, but treat apostrophe as first XOR last
+  // character as part of the word:
+  if (word.match(/'.*'/)) {
+   word = word.slice(1, -1);
+  }
+  if (word != "") {
+   chrome.storage.local.get(word, function (items) {
+     if (!(items[word] instanceof Array)) items[word] = [];
+     if (items[word].every(function (x) {
+	return x != partialURL;
+     })) {
+      items[word].push(partialURL);
+     }
+     chrome.storage.local.set(items);
+   });
+  }
+});
