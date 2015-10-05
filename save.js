@@ -5,7 +5,9 @@ var hiliteStyle = {
 };
 
 var selection = document.getSelection();
-var hiliteRecord = {};
+// var hiliteRecord = {};
+
+selectionText = selection.toString();
 
 // URL parsing kludge
 // we want same content but one http & other https to save as 1 doc, not 2
@@ -17,20 +19,19 @@ var partialURL = document.location.href.split(":")[1].split("#")[0];
 // Each highlight object has a text property (string)
 // and a style property (apropos to Element.style in DOM)
 
-selectionText = selection.toString();
-
 chrome.storage.local.get(partialURL, function (items) {
   if (!(items[partialURL] instanceof Array)) items[partialURL] = [];
   items[partialURL].push({
     text: selectionText,
-    style: hiliteStyle
+    style: hiliteStyle,
+    title: document.title
   });
   chrome.storage.local.set(items);
 });
 
 // downcase, dumb down smart apostrophes, split into words:
 
-var words = selectionText.toLowerCase().replace(/\u2019/, "'").split(/[^a-z']+/);
+var words = selectionText.toLowerCase().replace(/\u2019/, "'").split(/[\x00-\x26\x28\x29\x3a-\x40\x5b-\x60\x7b-\x7f]+/);
 
 // Incorporate words into word index:
 
