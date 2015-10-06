@@ -20,12 +20,15 @@ var partialURL = document.location.href.split(":")[1].split("#")[0];
 // and a style property (apropos to Element.style in DOM)
 
 chrome.storage.local.get(partialURL, function (items) {
-  if (!(items[partialURL] instanceof Array)) items[partialURL] = [];
-  items[partialURL].push({
+  if (!items[partialURL]) items[partialURL] = {
+   title: document.title,
+   hilites: []
+  };
+  items[partialURL].hilites.push({
     text: selectionText,
-    style: hiliteStyle,
-    title: document.title
+    style: hiliteStyle
   });
+  console.log("about to set: "+JSON.stringify(items));
   chrome.storage.local.set(items);
 });
 

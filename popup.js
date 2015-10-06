@@ -2,13 +2,32 @@ var list = document.getElementById("list");
 
 var searchInput = document.getElementById("search");
 
-keywordHandler = function (event) {
- alert(event.target.outerHTML);
+keywordHandler = function (items) {
+ return function (event) {
+  var ul = document.createElement("ul");
+  items.forEach(function (url) {
+    chrome.storage.local.get(url, function (items) {
+      a = document.createElement("a");
+      a.setAttribute("href", "http:"+url);
+      a.setAttribute("target", "_blank");
+      a.textContent = items[url].title || url;
+      var li = document.createElement("li"); 
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  });
+  event.target.parentNode.appendChild(ul);
+  alert("foo");
+ };
 }
+
+var prev = [];
 
 searchInput.addEventListener("input", function () {
 
-  var wordArray = searchInput.value.split(/'?[\x00-\x26\x28\x29\x3a-\x40\x5b-\x60\x7b-\x7f]+'?/);
+  wordArray = searchInput.value.split(/'?[\x00-\x26\x28\x29\x3a-\x40\x5b-\x60\x7b-\x7f]+'?/);
+  if (wordArray == prev) return;
+  prev = wordArray;
 
   // Replace word list to reflect new contents of #list
   // It's probably a short list, so keep things simple & brute force it:
@@ -26,7 +45,7 @@ searchInput.addEventListener("input", function () {
        var button = document.createElement("button");
        button.textContent = word+" ("+items[word].length+")";
        keyword.appendChild(button); 
-       keyword.addEventListener("click", keywordHandler);
+       keyword.addEventListener("click", keywordHandler(items[word]));
        list.appendChild(keyword);
       }
     })
