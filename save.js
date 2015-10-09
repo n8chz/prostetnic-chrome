@@ -28,13 +28,12 @@ chrome.storage.local.get(partialURL, function (items) {
     text: selectionText,
     style: hiliteStyle
   });
-  console.log("about to set: "+JSON.stringify(items));
   chrome.storage.local.set(items);
 });
 
 // downcase, dumb down smart apostrophes, split into words:
 
-var words = selectionText.toLowerCase().replace(/\u2019/, "'").split(/[\x00-\x26\x28\x29\x3a-\x40\x5b-\x60\x7b-\x7f]+/);
+var words = selectionText.toLowerCase().replace(/\u2019/, "'").split(/'?[\x00-\x26\x28-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+'?/);
 
 // Incorporate words into word index:
 

@@ -7,7 +7,6 @@ chrome.storage.local.get(partialURL, function (items) {
   if (items[partialURL]) {
    console.log("items[partialURL]: "+JSON.stringify(items[partialURL]));
    items[partialURL].hilites.forEach(function (hiliteRecord) {
-     console.log("hiliteRecord: "+JSON.stringify(hiliteRecord));
      window.find(hiliteRecord.text, false, false, false, false, false, false);
      hiliteSelection();
    });

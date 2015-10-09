@@ -13,3 +13,8 @@ var cm = chrome.contextMenus.create({
   }
 });
 
+chrome.browserAction.onClicked.addListener(function () {
+  chrome.tabs.create({
+    url: "./search.html"
+  });
+});
