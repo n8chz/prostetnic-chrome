@@ -5,7 +5,7 @@ var searchInput = document.getElementById("search");
 
 keywordHandler = function (items) {
  return function (event) {
-  event.preventDefault();
+  event.preventDefault(); // h/t wOxxOm http://stackoverflow.com/a/33011569/948073
   var ul = document.createElement("ul");
   items.forEach(function (url) {
     chrome.storage.local.get(url, function (items) {
