@@ -27,9 +27,11 @@ var prev = "";
 searchInput.addEventListener("input", function (event) {
   event.preventDefault();
   var input = searchInput.value;
-  if (input.match(/\s$/)) searchInput.value ="";
+  if (input.match(/\s$/)) searchInput.value = "";
   else {
-   var word = input.replace(/[\x00-\x26\x28-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]/g, "");
+   var word = input.toLowerCase();
+   word = word.replace(/[\x00-\x26\x28-\x2f\x3a-\x60\x7b-\x7f]/g, "");
+   searchInput.value = word;
    if (input.length && input != prev) chrome.storage.local.get(word, function (items) {
      if (word.length && items[word] instanceof Array && items[word].length) { // word.length test should not be necessary! TODO: Check save.js & make sure we aren't using "" as a storage key!
       var keyword = document.createElement("fieldset");    

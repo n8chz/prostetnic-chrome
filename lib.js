@@ -1,3 +1,25 @@
+/*
+var styleSheets = document.styleSheets;
+
+for (var i = 0; i < styleSheets.length; i++) {
+ var cssRules = styleSheets[i].cssRules;
+ for (var j = 0; j < cssRules.length; j++) {
+  var rule = cssRules[j];
+  if (rule.type == CSSRule.STYLE_RULE && rule.selectorText.match(/\bspan\b/)) {
+   var foo = {};
+   foo.selectorText = rule.selectorText;
+   foo.style = rule.style;
+   console.log(JSON.stringify(foo));
+  }
+ }
+}
+*/
+
+/*
+var span = document.querySelector("span");
+console.log(window.getComputedStyle(span));
+*/
+
 // Color selection not implemented yet,
 // so going with a constant value:
 
