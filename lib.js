@@ -89,6 +89,12 @@ function hiliteNode(node) {
 function hiliteSelection() {
 
  var selection = document.getSelection();
+ // if (!selection || !selection.rangeCount) confirm("Are we in a Disqus comment?");
+ if (!selection || !selection.rangeCount) {
+  // TODO: Log this event.  Page somehow blocks DOM-readable selections.
+  // alert("Hiliter won't work here.\n\nSomehow this website blocks DOM-readable selections.\n\nIf you understand the mechanics of this, please consider forking this extension at https://github.com/n8chz/prostetnic-chrome");
+  return;
+ }
 
  // Note that Chrome doesn't allow non-contiguous selections anyway, so
  // .rangeCount is always 1:

@@ -9,7 +9,7 @@
   "unlimitedStorage"
  ],
  "icons": {
-  "16": "hiliter.png"
+  "128": "hilite.png"
  },
  "background": {
    "scripts": ["menu.js"]
