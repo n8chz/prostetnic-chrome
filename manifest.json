@@ -23,10 +23,6 @@
  ],
  "browser_action": {
   "default_icon": {
-  // "Gnome-searchtool" by David Vignoni -
-  // http://ftp.gnome.org/pub/GNOME/sources/gnome-themes-extras/0.9/gnome-themes-extras-0.9.0.tar.gz.
-  // Licensed under LGPL via Wikimedia Commons -
-  // https://commons.wikimedia.org/wiki/File:Gnome-searchtool.svg#/media/File:Gnome-searchtool.svg
    "19": "search19.png",
    "38": "search.png"
   },
