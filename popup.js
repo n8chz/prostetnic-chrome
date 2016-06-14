@@ -1,3 +1,4 @@
+console.log("entering popup.js");
 
 var list = document.getElementById("list");
 

@@ -1,3 +1,4 @@
+console.log("entered save.js");
 
 var hiliteStyle = {
  color: "black",
