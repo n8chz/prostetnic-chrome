@@ -1,0 +1,15 @@
+{
+  "title": "Persistent Highlighter",
+  "name": "prostetnic-chrome",
+  "version": "0.0.2",
+  "description": "Text highlighter for web pages, with lookup of previously highlighted words.",
+  "main": "menu.js",
+  "author": "Lorraine Lee",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "CC0",
+  "keywords": [
+    "jetpack"
+  ]
+}

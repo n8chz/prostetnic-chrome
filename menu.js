@@ -10,10 +10,10 @@ var cm = chrome.contextMenus.create({
      file: "lib.js"
    }, function () {
      chrome.tabs.executeScript(null, {
-       file: "hilite.js"
+       file: "save.js"
      }, function () {
        chrome.tabs.executeScript(null, {
-         file: "save.js" // make a record of highlight
+         file: "hilite.js" // make a record of highlight
        })
      })
    });

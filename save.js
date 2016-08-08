@@ -10,6 +10,8 @@ var selection = document.getSelection();
 
 selectionText = selection.toString();
 
+console.log(`selectionText: ${selectionText}`);
+
 // URL parsing kludge
 // we want same content but one http & other https to save as 1 doc, not 2
 // also, we want different locations in document to save as same doc
@@ -29,6 +31,7 @@ chrome.storage.local.get(partialURL, function (items) {
     text: selectionText,
     style: hiliteStyle
   });
+  console.log(`about to store: ${JSON.stringify(items)}`);
   chrome.storage.local.set(items);
 });
 
