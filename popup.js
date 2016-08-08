@@ -1,5 +1,3 @@
-console.log("entering popup.js");
-
 var list = document.getElementById("list");
 
 var searchInput = document.getElementById("search");
