@@ -10,7 +10,7 @@ var hiliteStyle = {
 // one of which is the portion of the node that is
 // within the selection's range:
 
-function splitContainer(container, startOffset, endOffset) {
+function splitContainer(container, startOffset, endOffset, style) {
  if (container.nodeType == Node.TEXT_NODE) {
   var text = container.textContent;
   if (!text.match(/\S/)) return;
@@ -29,7 +29,7 @@ function splitContainer(container, startOffset, endOffset) {
   }
   container.textContent = mid;
   if (mid.match(/\S/)) {
-   hiliteNode(container);
+   hiliteNode(container, style);
   }
  }
 } 
@@ -52,19 +52,17 @@ function leafNodes(node, range) {
  }
 }
 
-function hiliteNode(node) {
+function hiliteNode(node, style) {
  var text = node.textContent;
  if (!text.match(/\S/)) return;
  var newSpan = document.createElement("span");
  newSpan.textContent = text;
  newSpan.className = "prostetnic";
- for (var property in hiliteStyle) {
-  newSpan.style[property] = hiliteStyle[property];
- }
+ newSpan.style = style;
  node.parentNode.replaceChild(newSpan, node);
 }
 
-function hiliteSelection() {
+function hiliteSelection(style) {
 
  var selection = document.getSelection();
  // if (!selection || !selection.rangeCount) confirm("Are we in a Disqus comment?");
@@ -88,7 +86,7 @@ function hiliteSelection() {
  var endOffset = range.endOffset;
 
  if (startContainer == endContainer) {
-  splitContainer(startContainer, startOffset, endOffset);
+  splitContainer(startContainer, startOffset, endOffset, style);
  }
  else {
   splitContainer(startContainer, startOffset, null);

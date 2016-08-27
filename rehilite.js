@@ -6,7 +6,7 @@ chrome.storage.local.get(partialURL, function (items) {
   if (items[partialURL]) {
    items[partialURL].hilites.forEach(function (hiliteRecord) {
      window.find(hiliteRecord.text, false, false, false, false, false, false);
-     hiliteSelection();
+     hiliteSelection(hiliteRecord.style);
    });
   }
   else {

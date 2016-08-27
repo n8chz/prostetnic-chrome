@@ -1,5 +1,13 @@
 // chrome.storage.local.clear(function () {alert("storage is clear, in theory");});
 
+chrome.storage.local.get("$style", function (value) {
+  if (!value["$style"]) {
+   chrome.storage.local.set({
+     "$style": "background-color: yellow; color: black;"
+   });
+  }
+});
+
 chrome.contextMenus.create({
   title: "Highlight current selection",
   contexts: ["selection"],
