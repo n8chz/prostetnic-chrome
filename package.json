@@ -1,7 +1,7 @@
 {
   "title": "Persistent Highlighter",
   "name": "prostetnic-chrome",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Text highlighter for web pages, with lookup of previously highlighted words.",
   "main": "menu.js",
   "author": "Lorraine Lee",

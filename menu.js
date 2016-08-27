@@ -1,6 +1,6 @@
 // chrome.storage.local.clear(function () {alert("storage is clear, in theory");});
 
-var cm = chrome.contextMenus.create({
+chrome.contextMenus.create({
   title: "Highlight current selection",
   contexts: ["selection"],
   onclick: function (obj, tab) {
@@ -18,8 +18,24 @@ var cm = chrome.contextMenus.create({
   }
 });
 
+function selectColor(obj, tab) {
+ chrome.windows.create({
+   url: chrome.extension.getURL("picker.html"),
+   type: "popup"
+ });
+}
+
+chrome.contextMenus.create({
+  title: "Select highlighter color",
+  contexts: ["all"],
+  onclick: selectColor
+});
+
+/*
 chrome.browserAction.onClicked.addListener(function () {
   chrome.tabs.create({
     url: "./search.html"
   });
 });
+*/
+
