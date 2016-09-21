@@ -1,6 +1,6 @@
 {
  "name" : "Persistent Highlighter",
- "version" : "0.0.4",
+ "version" : "0.0.5",
  "description" : "A watered-down port of Prostetnic Highlighter",
  "permissions": [
   "contextMenus",

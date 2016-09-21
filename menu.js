@@ -29,7 +29,9 @@ chrome.contextMenus.create({
 function selectColor(obj, tab) {
  chrome.windows.create({
    url: chrome.extension.getURL("picker.html"),
-   type: "popup"
+   type: "popup",
+   height: 500,
+   width: 1000
  });
 }
 

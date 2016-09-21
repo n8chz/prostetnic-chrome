@@ -6,8 +6,12 @@ function update(property, value) {
 
 $(function () {
 
-  update("background-color", "yellow");
-  update("color", "black");
+  chrome.storage.local.get("$style", function (value) {
+    var style = value["$style"];
+    $("#done").attr("style", style);
+    update("background-color", $("#done").css("background-color"));
+    update("color", $("#done").css("color"));
+  });
 
   $(".change").click(function () {
     var property = $(this).hasClass("color") ? "color" : "background-color";
@@ -19,9 +23,8 @@ $(function () {
     chrome.storage.local.set({
       "$style": $(this).attr("style")
     }, function () {
-      chrome.windows.remove();
+      chrome.windows.remove(chrome.windows.WINDOW_ID_CURRENT);
     });
-    chrome.windows.remove(chrome.windows.WINDOW_ID_CURRENT);
   });
 
 });

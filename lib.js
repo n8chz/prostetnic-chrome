@@ -35,18 +35,18 @@ function splitContainer(container, startOffset, endOffset, style) {
 } 
 
 
-function leafNodes(node, range) {
+function leafNodes(node, range, style) {
  if (node) {
   if (node.nodeType == Node.TEXT_NODE) {
    var foo = range.comparePoint(node, 0);
    var goo = range.comparePoint(node, node.textContent.length);
    if (foo == 0 && goo == 0) {
-    hiliteNode(node);
+    hiliteNode(node, style);
    }
   }
   else if (node.hasChildNodes()) {
    for (var k = 0; k < node.childNodes.length; k++) {
-    leafNodes(node.childNodes[k], range);
+    leafNodes(node.childNodes[k], range, style);
    }
   }
  }
@@ -99,7 +99,7 @@ function hiliteSelection(style) {
 
  var ancestorContainer = range.commonAncestorContainer;
 
- leafNodes(ancestorContainer, range);
+ leafNodes(ancestorContainer, range, style);
  selection.removeAllRanges();
 
 }
