@@ -1,11 +1,3 @@
-// Color selection not implemented yet,
-// so going with a constant value:
-
-var hiliteStyle = {
- color: "black",
- backgroundColor: "yellow"
-};
-
 // splitContainer splits a text node into 1-3 nodes,
 // one of which is the portion of the node that is
 // within the selection's range:
@@ -89,8 +81,8 @@ function hiliteSelection(style) {
   splitContainer(startContainer, startOffset, endOffset, style);
  }
  else {
-  splitContainer(startContainer, startOffset, null);
-  splitContainer(endContainer, null, endOffset);
+  splitContainer(startContainer, startOffset, null, style);
+  splitContainer(endContainer, null, endOffset, style);
  }
 
  // The Range class does have a property that gives the common ancestor, which
