@@ -1,6 +1,6 @@
 {
  "name" : "Persistent Highlighter",
- "version" : "0.0.6",
+ "version" : "0.0.7",
  "description" : "A watered-down port of Prostetnic Highlighter",
  "homepage_url": "https://github.com/n8chz/prostetnic-chrome/tree/multicolor",
  "permissions": [

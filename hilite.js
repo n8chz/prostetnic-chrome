@@ -1,4 +1,5 @@
 chrome.storage.local.get("$style", function (value) {
-  hiliteSelection(value["$style"]);
+  // TODO: assign value to hiliteID
+  hiliteSelection(hiliteID, value["$style"]);
 });
 

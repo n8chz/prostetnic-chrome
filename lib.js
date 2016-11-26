@@ -2,7 +2,7 @@
 // one of which is the portion of the node that is
 // within the selection's range:
 
-function splitContainer(container, startOffset, endOffset, style) {
+function splitContainer(container, startOffset, endOffset, hiliteID, style) {
  if (container.nodeType == Node.TEXT_NODE) {
   var text = container.textContent;
   if (!text.match(/\S/)) return;
@@ -21,40 +21,41 @@ function splitContainer(container, startOffset, endOffset, style) {
   }
   container.textContent = mid;
   if (mid.match(/\S/)) {
-   hiliteNode(container, style);
+   hiliteNode(container, hiliteID, style);
   }
  }
 } 
 
 
-function leafNodes(node, range, style) {
+function leafNodes(node, range, hiliteID, style) {
  if (node) {
   if (node.nodeType == Node.TEXT_NODE) {
    var foo = range.comparePoint(node, 0);
    var goo = range.comparePoint(node, node.textContent.length);
    if (foo == 0 && goo == 0) {
-    hiliteNode(node, style);
+    hiliteNode(node, hiliteID, style);
    }
   }
   else if (node.hasChildNodes()) {
    for (var k = 0; k < node.childNodes.length; k++) {
-    leafNodes(node.childNodes[k], range, style);
+    leafNodes(node.childNodes[k], range, hiliteID, style);
    }
   }
  }
 }
 
-function hiliteNode(node, style) {
+function hiliteNode(node, hiliteID, style) {
  var text = node.textContent;
  if (!text.match(/\S/)) return;
  var newSpan = document.createElement("span");
  newSpan.textContent = text;
- newSpan.className = "prostetnic";
+ newSpan.classList.add("prostetnic");
+ newSpan.setAttribute("data-hilite-id", hiliteID);
  newSpan.style = style;
  node.parentNode.replaceChild(newSpan, node);
 }
 
-function hiliteSelection(style) {
+function hiliteSelection(hiliteID, style) {
 
  var selection = document.getSelection();
  // if (!selection || !selection.rangeCount) confirm("Are we in a Disqus comment?");
@@ -78,11 +79,11 @@ function hiliteSelection(style) {
  var endOffset = range.endOffset;
 
  if (startContainer == endContainer) {
-  splitContainer(startContainer, startOffset, endOffset, style);
+  splitContainer(startContainer, startOffset, endOffset, hiliteID, style);
  }
  else {
-  splitContainer(startContainer, startOffset, null, style);
-  splitContainer(endContainer, null, endOffset, style);
+  splitContainer(startContainer, startOffset, null, hiliteID, style);
+  splitContainer(endContainer, null, endOffset, hiliteID, style);
  }
 
  // The Range class does have a property that gives the common ancestor, which
@@ -91,7 +92,7 @@ function hiliteSelection(style) {
 
  var ancestorContainer = range.commonAncestorContainer;
 
- leafNodes(ancestorContainer, range, style);
+ leafNodes(ancestorContainer, range, hiliteID, style);
  selection.removeAllRanges();
 
 }
