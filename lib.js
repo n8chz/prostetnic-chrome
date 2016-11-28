@@ -1,3 +1,5 @@
+//chrome.storage.local.clear(function () {alert("storage is clear, in theory");});
+
 // splitContainer splits a text node into 1-3 nodes,
 // one of which is the portion of the node that is
 // within the selection's range:

@@ -1,5 +1,3 @@
-// chrome.storage.local.clear(function () {alert("storage is clear, in theory");});
-
 chrome.storage.local.get("$style", function (value) {
   if (!value["$style"]) {
    chrome.storage.local.set({
@@ -17,11 +15,7 @@ chrome.contextMenus.create({
    }, function () {
      chrome.tabs.executeScript(null, {
        file: "save.js"
-     }, function () {
-       chrome.tabs.executeScript(null, {
-         file: "hilite.js" // make a record of highlight
-       })
-     })
+     });
    });
   }
 });

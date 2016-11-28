@@ -1,15 +1,5 @@
-function makeHash() {
- var hash = "";
- for (var k=0; k < 32; k++) {
-  hash += String.fromCharCode(Math.floor(Math.random()*75+48));
- }
- return hash;
-}
 
-var hiliteID = makeHash();
-
-
-function saveHighlight(hiliteStyle) {
+function saveHighlight(hiliteStyle, hiliteID) {
 
  var selection = document.getSelection();
 
@@ -26,6 +16,7 @@ function saveHighlight(hiliteStyle) {
  // and a style property (apropos to Element.style in DOM)
 
  var hiliteObj = {
+  // id: hiliteID,
   url: partialURL,
   text: selectionText,
   style: hiliteStyle
@@ -46,6 +37,7 @@ function saveHighlight(hiliteStyle) {
 */
    items[partialURL].hilites.push(hiliteID);
 
+   console.log(`About to set: ${JSON.stringify(items)}`);
    chrome.storage.local.set(items);
 
  });
@@ -70,13 +62,31 @@ function saveHighlight(hiliteStyle) {
       })) {
        items[word].push(hiliteID);
       }
+      console.log(`About to set: ${JSON.stringify(items)}`);
       chrome.storage.local.set(items);
     });
    }
  });
 }
 
-chrome.storage.local.get("$style", function (value) {
-  saveHighlight(value["$style"]);
+chrome.storage.local.get("$style", function (style) {
+  var styleKeypair = style;
+  chrome.storage.local.get("$hiliteID", function (id) {
+    // TODO: calculate hiliteID w/o throwing exceptions
+    var number;
+    if (Object.keys(id).length == 0) {
+     number = 0;
+    }
+    else {
+     number = Number(id["$hiliteID"].slice(1))+1;
+    }
+    var hiliteID = "$"+number;
+    console.log(`hiliteID = ${hiliteID}`);
+    chrome.storage.local.set({"$hiliteID": hiliteID}, function () {
+      var styleString = styleKeypair["$style"];
+      saveHighlight(style, hiliteID);
+      hiliteSelection(hiliteID, style);
+    });
+  });
 });
 
