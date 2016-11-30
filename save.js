@@ -22,7 +22,11 @@ function saveHighlight(hiliteStyle, hiliteID) {
   style: hiliteStyle
  };
 
- chrome.storage.local.set({hiliteID: hiliteObj});
+ var storageItem = {};
+ storageItem[hiliteID] = hiliteObj;
+
+ console.log(JSON.stringify(storageItem));
+ chrome.storage.local.set(storageItem);
 
  chrome.storage.local.get(partialURL, function (items) {
    if (!items[partialURL]) items[partialURL] = {
@@ -37,7 +41,6 @@ function saveHighlight(hiliteStyle, hiliteID) {
 */
    items[partialURL].hilites.push(hiliteID);
 
-   console.log(`About to set: ${JSON.stringify(items)}`);
    chrome.storage.local.set(items);
 
  });
@@ -62,7 +65,6 @@ function saveHighlight(hiliteStyle, hiliteID) {
       })) {
        items[word].push(hiliteID);
       }
-      console.log(`About to set: ${JSON.stringify(items)}`);
       chrome.storage.local.set(items);
     });
    }
@@ -81,11 +83,10 @@ chrome.storage.local.get("$style", function (style) {
      number = Number(id["$hiliteID"].slice(1))+1;
     }
     var hiliteID = "$"+number;
-    console.log(`hiliteID = ${hiliteID}`);
     chrome.storage.local.set({"$hiliteID": hiliteID}, function () {
       var styleString = styleKeypair["$style"];
-      saveHighlight(style, hiliteID);
-      hiliteSelection(hiliteID, style);
+      saveHighlight(styleString, hiliteID);
+      hiliteSelection(hiliteID, styleString);
     });
   });
 });

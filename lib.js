@@ -58,6 +58,7 @@ function hiliteNode(node, hiliteID, style) {
 }
 
 function hiliteSelection(hiliteID, style) {
+ console.log(`hiliteSelection(${hiliteID}, ${JSON.stringify(style)})`);
 
  var selection = document.getSelection();
  // if (!selection || !selection.rangeCount) confirm("Are we in a Disqus comment?");

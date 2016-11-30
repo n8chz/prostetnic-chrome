@@ -4,12 +4,7 @@ var list = document.getElementById("list");
 
 var searchInput = document.getElementById("search");
 
-keywordHandler = function (items) {
- console.log(`items received by keywordHandler: ${JSON.stringify(items)}`);
- return function (event) {
-  event.preventDefault(); // h/t wOxxOm http://stackoverflow.com/a/33011569/948073
-  var ul = document.createElement("ul");
-  items.forEach(function (url) {
+function drawLinks(ul, url) {
     chrome.storage.local.get(url, function (items) {
       a = document.createElement("a");
       a.setAttribute("href", "http:"+url);
@@ -19,6 +14,23 @@ keywordHandler = function (items) {
       li.appendChild(a);
       ul.appendChild(li);
     });
+}
+
+keywordHandler = function (items) {
+ console.log(`items received by keywordHandler: ${JSON.stringify(items)}`);
+ return function (event) {
+  event.preventDefault(); // h/t wOxxOm http://stackoverflow.com/a/33011569/948073
+  var ul = document.createElement("ul");
+  items.forEach(function (item) {
+    if (item[0] == "$") {
+     chrome.storage.local.get(item, function (result) {
+       console.log(`${item} -> ${JSON.stringify(result)}`);
+       drawLinks(ul, result[item].url);
+     });
+    }
+    else {
+     drawLinks(ul, item);
+    }
   });
   event.target.parentNode.appendChild(ul);
  };
