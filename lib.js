@@ -64,7 +64,7 @@ function hiliteSelection(hiliteID, style) {
  // if (!selection || !selection.rangeCount) confirm("Are we in a Disqus comment?");
  if (!selection || !selection.rangeCount) {
   // TODO: Log this event.  Page somehow blocks DOM-readable selections.
-  alert("Hiliter won't work here.\n\nSomehow this website blocks DOM-readable selections.\n\nIf you understand the mechanics of this, please consider forking this extension at https://github.com/n8chz/prostetnic-chrome");
+  console.log("Hiliter won't work here.\n\nSomehow this website blocks DOM-readable selections.\n\nIf you understand the mechanics of this, please consider forking this extension at https://github.com/n8chz/prostetnic-chrome");
   return;
  }
 
