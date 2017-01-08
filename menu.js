@@ -35,11 +35,30 @@ chrome.contextMenus.create({
   onclick: selectColor
 });
 
-/*
-chrome.browserAction.onClicked.addListener(function () {
-  chrome.tabs.create({
-    url: "./search.html"
-  });
-});
-*/
+// Handle requests to modify highlights
 
+function handleMessage(request, sender, sendResponse) {
+
+ console.log(`sender.tab.id: ${sender.tab.id}`);
+
+ var promise = chrome.windows.create({
+   url: chrome.extension.getURL("picker.html"),
+   type: "popup",
+   height: 501, // kludge!
+   width: 1000
+ });
+
+ chrome.windows.onRemoved.addListener(function (windowId) {
+   chrome.tabs.sendMessage(sender.tab.id, "foo");
+/*
+   if (promise) {
+    console.log(`promise keys: ${JSON.stringify(Object.keys(promise))}}`);
+    // color for update will be stored in $modify
+    // sendResponse();
+   }
+*/
+ });
+
+}
+
+chrome.runtime.onMessage.addListener(handleMessage);

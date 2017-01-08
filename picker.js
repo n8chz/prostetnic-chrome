@@ -1,3 +1,7 @@
+// isModify is true for modifying existing highlights,
+// false otherwise.
+var isModify = window.outerHeight != 500;
+
 function update(property, value) {
  var counter = property == "color" ? "background-color" : "color";
  $(`button.${counter}`).css(property, value);
@@ -26,14 +30,15 @@ $(function () {
   // The button with "Done" on it stores the selected style in storage as the
   // value associated with the key "$style"
   $("#done").click(function () {
-    chrome.storage.local.set({
-      "$style": $(this).attr("style")
-    }, function () {
+    var keyToSet = isModify ? "$modify" : "$style";
+    var params = {};
+    params[keyToSet] = $(this).attr("style"); 
+    chrome.storage.local.set(params, function () {
       // kludge because in versions < 50, chrome.windows.remove() won't accept
       // a negative value, including the constant
       // chrome.windows.WINDOW_ID_CURRENT, which has a value of -2.
       chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function (w) {
-        chrome.windows.remove(w.id);
+	chrome.windows.remove(w.id);
       });
     });
   });

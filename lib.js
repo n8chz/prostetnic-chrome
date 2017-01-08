@@ -52,9 +52,94 @@ function hiliteNode(node, hiliteID, style) {
  var newSpan = document.createElement("span");
  newSpan.textContent = text;
  newSpan.classList.add("prostetnic");
- newSpan.setAttribute("data-hilite-id", hiliteID);
+ // newSpan.setAttribute("data-hilite-id", hiliteID);
  newSpan.style = style;
  node.parentNode.replaceChild(newSpan, node);
+
+ // See https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/contextmenu
+ var menuID = hiliteID.replace("$", "prostetnic-");
+ console.log(`menuID = ${menuID}`);
+ newSpan.setAttribute("contextmenu", menuID);
+ var menuForHighlight = $("<menu>", {
+   id: menuID,
+   type: "context"
+ });
+ var subMenu = $("<menu>", {
+   label: "This highlighted passage..."
+ }).appendTo(menuForHighlight);
+ var modifyItem = $("<menuitem>", {
+   label: "Modify"
+ }).appendTo(subMenu);
+
+/*
+ function handleResponse(message) {
+  console.log(`handleResponse with message=${message}`);
+  if (message == "foo") {
+   var contextMenu = $(this).parent().parent().attr("id");
+   chrome.storage.local.get("$modify", function (data) {
+     var modify = data["$modify"];
+     $(`span[contextmenu='${menuID}']`).attr("style", modify);
+     // TODO: Now make change in storage
+   });
+  }
+  // $(`span[contextmenu=${contextMenu}]`).attr("style", message.style);
+  // chrome.storage.local.remove(contextMenu.replace("prostetnic-", "$"));
+ }
+
+ function handleError(error) {
+   console.error(`Error: ${JSON.stringify(error)}`);
+ }
+*/
+
+ function notifyBackgroundPage() {
+   console.log("modify menu clicked");
+   chrome.runtime.sendMessage();
+   chrome.runtime.onMessage.addListener(function () {
+     console.log("message received from menu.js");
+     var contextMenu = $(this).parent().parent().attr("id");
+     chrome.storage.local.get("$modify", function (data) {
+       var modify = data["$modify"];
+       $(`span[contextmenu='${menuID}']`).attr("style", modify);
+       // TODO: Now make change in storage
+     });
+   });
+ }
+
+ modifyItem.click(notifyBackgroundPage);
+ // TODO: try rewriting modify below using .sendMessage()
+ // see https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/runtime#sendMessage()
+/*
+ modifyItem.click(function () {
+   var promise = chrome.windows.create({
+     url: chrome.extension.getURL("picker.html"),
+     type: "popup",
+     height: 501, // kludge!
+     width: 1000
+   });
+   chrome.windows.onRemoved.addListener(function (windowId) {
+     if (windowId == promise.windowId) {
+      // color for update will be stored in $modify
+      // Change color in window:
+      chrome.storage.local.get("$modify", function (data) {
+	$(`span[contextmenu='${menuID}']`).attr("style", data["$modify"]);
+      });
+      // TODO: Change color in database:
+     }
+   });
+ });
+*/
+ var deleteItem = $("<menuitem>", {
+   label: "Remove highlight"
+ }).appendTo(subMenu);
+ deleteItem.click(function () {
+   var contextMenu = $(this).parent().parent().attr("id");
+   $(`span[contextmenu=${contextMenu}]`).removeAttr("style");
+   // Make it stick by erasing it from storage, too.
+   chrome.storage.local.remove(contextMenu.replace("prostetnic-", "$"));
+   // TODO: remove from list of highlight id's in value of url's key
+ });
+ menuForHighlight.attr("type", "context");
+ $("body").prepend(menuForHighlight);
 }
 
 function hiliteSelection(hiliteID, style) {
