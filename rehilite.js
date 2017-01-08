@@ -1,4 +1,4 @@
-console.log(`rehilite.js checking in`);
+// console.log(`rehilite.js checking in`);
 
 // restore any highlights previously applied to the page we have just opened:
 
@@ -9,8 +9,8 @@ chrome.storage.local.get(partialURL, function (items) {
    items[partialURL].hilites.forEach(function (hilite) {
      if (typeof hilite == "string") {
       chrome.storage.local.get(hilite, function (hiliteObj) {
-	window.find(hiliteObj[hilite].text, false, false, false, false, false, false);
-        hiliteSelection(hilite, hiliteObj[hilite].style);
+	var found = window.find(hiliteObj[hilite].text, false, false, false, false, false, false);
+        if (found) hiliteSelection(hilite, hiliteObj[hilite].style);
       });
      }
      else {

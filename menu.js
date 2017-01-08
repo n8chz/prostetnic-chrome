@@ -39,8 +39,6 @@ chrome.contextMenus.create({
 
 function handleMessage(request, sender, sendResponse) {
 
- console.log(`sender.tab.id: ${sender.tab.id}`);
-
  var promise = chrome.windows.create({
    url: chrome.extension.getURL("picker.html"),
    type: "popup",
@@ -50,13 +48,6 @@ function handleMessage(request, sender, sendResponse) {
 
  chrome.windows.onRemoved.addListener(function (windowId) {
    chrome.tabs.sendMessage(sender.tab.id, "foo");
-/*
-   if (promise) {
-    console.log(`promise keys: ${JSON.stringify(Object.keys(promise))}}`);
-    // color for update will be stored in $modify
-    // sendResponse();
-   }
-*/
  });
 
 }

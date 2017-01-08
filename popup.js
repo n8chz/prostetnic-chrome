@@ -1,4 +1,4 @@
-console.log("popup.js checking in");
+// console.log("popup.js checking in");
 
 var list = document.getElementById("list");
 
@@ -17,14 +17,12 @@ function drawLinks(ul, url) {
 }
 
 keywordHandler = function (items) {
- console.log(`items received by keywordHandler: ${JSON.stringify(items)}`);
  return function (event) {
   event.preventDefault(); // h/t wOxxOm http://stackoverflow.com/a/33011569/948073
   var ul = document.createElement("ul");
   items.forEach(function (item) {
     if (item[0] == "$") {
      chrome.storage.local.get(item, function (result) {
-       console.log(`${item} -> ${JSON.stringify(result)}`);
        drawLinks(ul, result[item].url);
      });
     }
@@ -51,7 +49,6 @@ searchInput.addEventListener("input", function (event) {
    word = word.replace(/[\x00-\x26\x28-\x2f\x3a-\x60\x7b-\x7f]/g, "");
    searchInput.value = word;
    if (input.length && input != prev) chrome.storage.local.get(word, function (items) {
-     console.log(`Querying store for key: ${word}\nvalue is ${JSON.stringify(items)}`);
      if (word.length && items[word] instanceof Array && items[word].length) {
       // word.length test should not be necessary!
       // TODO: Check save.js & make sure we aren't using "" as a storage key!

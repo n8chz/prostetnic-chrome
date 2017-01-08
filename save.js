@@ -25,7 +25,6 @@ function saveHighlight(hiliteStyle, hiliteID) {
  var storageItem = {};
  storageItem[hiliteID] = hiliteObj;
 
- console.log(JSON.stringify(storageItem));
  chrome.storage.local.set(storageItem);
 
  chrome.storage.local.get(partialURL, function (items) {
