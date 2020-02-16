@@ -1,7 +1,7 @@
 # prostetnic-chrome
 Porting [Prostetnic Highlighter](https://github.com/n8chz/prostetnic) to Chromium.
 
-This is not hosted in the Chrome Web Store, so you probably have to enable "developer mode" to use it.
+Available in packaged form for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/persistent-color-highlighter/?src=search) and [Chrome/ium](https://chrome.google.com/webstore/detail/persistent-highlighter/njeijipoihldmgnelkdhohadaigobeml).
 
 So far,
 * highlights the text on the page,
